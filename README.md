@@ -21,6 +21,9 @@ Loading many drawable resource (about 300 ~ 800 px * 8) cause OutOfMemory.
 
 in AndroidManifest.xml
 
+**Postscript**
+it seems to be resolved with decoding bitmap resource. 
+
 ### decode bitmap resource
 
 reference: [Android Developers : Loading Large Bitmaps Efficiently](https://developer.android.com/training/displaying-bitmaps/load-bitmap.html)
