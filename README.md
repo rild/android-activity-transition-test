@@ -29,3 +29,7 @@ it seems to be resolved with decoding bitmap resource.
 reference: [Android Developers : Loading Large Bitmaps Efficiently](https://developer.android.com/training/displaying-bitmaps/load-bitmap.html)
 
 use the method in *ImageAdapter.java* 
+
+**Postscript**
+Bitmap resource size need not be the same as layoutParam size in GridView ...? 
+

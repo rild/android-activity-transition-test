@@ -39,7 +39,7 @@ public class ImageAdapter extends BaseAdapter {
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         //use the size in gridview argument/scale bitmap resource
-        int layoutParams = 200;
+        int layoutParams = 300;
         ImageView imageView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
@@ -52,6 +52,10 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         //Resize bitmap resource after setting image to imageview
+        //report: reqWidth / reqHeight over 300 required large heap and logged "The application may be doing too much work on its main thread."
+        if (layoutParams > 200) {
+            layoutParams = layoutParams / 3;
+        }
         imageView.setImageBitmap(
                 decodeSampledBitmapFromResource(mContext.getResources(), mThumbIds[position], layoutParams, layoutParams));
         return imageView;
