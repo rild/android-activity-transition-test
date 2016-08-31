@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">android-activity-transition-test</string>
+    <string name="trans_name">list_to_detail</string>
+</resources>
