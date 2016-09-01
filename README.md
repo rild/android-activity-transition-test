@@ -8,7 +8,21 @@ finished in 2016/09/01
 
 <img width="300" height="519" alt="override_method" src="./demos/activity_transition_test_alpha.gif">
 
-# Making
+# Bugs Report
+
+## Animation Do Not Move Slimy
+There is situation that animation would not move slimy.
+### went well
+Google Nexus 5 (Genymotion)
+
+(Back)onBackPressed
+
+### something trouble
+Sony Xperia Z3 (Actual equipment)
+
+(Back) Intent from ImageDetailActivity to MainActivity 
+
+# Making Process
 
 ## GridView
 [Android Developers : GridView](https://developer.android.com/guide/topics/ui/layout/gridview.html)
@@ -60,6 +74,10 @@ use the method in *ImageAdapter.java*
 
 **Postscript**
 Bitmap resource size need not be the same as layoutParam size in GridView ...? 
+
+## call onBackPressed
+
+[](http://stackoverflow.com/questions/10718789/how-to-press-back-button-in-android-programatically)
 
 
 
