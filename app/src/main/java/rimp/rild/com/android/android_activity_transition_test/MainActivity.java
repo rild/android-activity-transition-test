@@ -2,10 +2,14 @@ package rimp.rild.com.android.android_activity_transition_test;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Transition;
 import android.view.View;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
@@ -28,6 +32,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {
+//        /*
+//        To enable window content transitions in your code instead, call the Window.requestFeature() method:
+//         */
+//            getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
+//            Transition ts = new Explode();  //Slide(); //Explode();
+//
+//            ts.setStartDelay(1000);
+//            ts.setDuration(2000);
+//
+//        /*
+//        If you have set an enter transition for the second activity,
+//        the transition is also activated when the activity starts.
+//         */
+//
+//            getWindow().setEnterTransition(ts);
+//            getWindow().setExitTransition(ts);
+
+//            ChangeBounds bounds = new ChangeBounds();
+//            bounds.setDuration(1000);
+//            getWindow().setSharedElementEnterTransition(bounds);
+        }
+
         setContentView(R.layout.activity_main);
 
         mActivity = this;

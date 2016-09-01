@@ -2,10 +2,12 @@ package rimp.rild.com.android.android_activity_transition_test;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Slide;
+import android.transition.Transition;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ import com.google.gson.Gson;
 import rimp.rild.com.android.android_activity_transition_test.data.models.Article;
 
 public class ImageDetailActivity extends AppCompatActivity {
-    public static final String  EXTRA_CONTENT = "Image Detail Content";
+    public static final String EXTRA_CONTENT = "Image Detail Content";
     Activity mActivity;
 
     Article mArticle;
@@ -23,10 +25,28 @@ public class ImageDetailActivity extends AppCompatActivity {
     ImageView mArticleImage;
     TextView mTitleText;
     TextView mContentText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {
+            ///
+//            getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
+//            Transition ts = new Slide();  //Slide(); //Explode();
+//
+//            ts.setDuration(1000);
+//
+//            getWindow().setEnterTransition(ts);
+//            getWindow().setExitTransition(ts);
+
+//            ChangeBounds bounds = new ChangeBounds();
+//            bounds.setDuration(1000);
+//            getWindow().setSharedElementEnterTransition(bounds);
+        }
+
         setContentView(R.layout.activity_detail);
+
+
 
         mActivity = this;
 
