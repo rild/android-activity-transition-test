@@ -6,7 +6,7 @@ Using GridView Test.
 # DONE
 2016/09/01
 
-![](./demos/activity_transition_test_alpha.gif)
+<img width="300" height="519" alt="override_method" src="./demos/activity_transition_test_alpha.gif">
 
 # Making
 
