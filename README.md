@@ -6,7 +6,7 @@ Using GridView Test.
 # DONE
 2016/09/01
 
-![](./demo/activity_transition_test_alpha.gif)
+![](./demos/activity_transition_test_alpha.gif)
 
 # Making
 
