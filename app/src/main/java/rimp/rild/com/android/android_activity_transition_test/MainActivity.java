@@ -1,8 +1,6 @@
 package rimp.rild.com.android.android_activity_transition_test;
 
 import android.app.Activity;
-import android.app.LauncherActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -15,6 +13,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import rimp.rild.com.android.android_activity_transition_test.data.models.Article;
 
 public class MainActivity extends AppCompatActivity {
     GridView mGridView;
@@ -38,10 +40,25 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
+                Gson parser = new Gson();
+//                Article item = (Article) mImageAdapter.getItem(position);
+//                Intent intent = new Intent(mActivity, ImageDetailActivity.class);
+//                intent.putExtra(ImageDetailActivity.EXTRA_CONTENT, parser.toJson(item));
+//                startActivity(intent);
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        mActivity,
+                        view.findViewById(R.id.row_image),
+                        getString(R.string.trans_name) );
+                Article item = (Article) mImageAdapter.getItem(position);
+                Intent intent = new Intent(mActivity, ImageDetailActivity.class);
+                intent.putExtra(ImageDetailActivity.EXTRA_CONTENT, parser.toJson(item));
+                ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
 
 
+        test();
 
 
     }
@@ -61,16 +78,17 @@ public class MainActivity extends AppCompatActivity {
         final AnimationSet set = new AnimationSet(true);
 
         //どのくらいずらすか
-        float jitterX = 10; //横向きにどのくらいずらすか
-        float jitterY = 10; //縦向きにどのくらいずらすか
+        float jitterX = 0; //横向きにどのくらいずらすか
+        float jitterY = 0; //縦向きにどのくらいずらすか
 
         //初めの座標をとってくる
         float startPointX = mTextView.getX();
         float startPointY = mTextView.getY();
 
+
         TranslateAnimation translate =
-                new TranslateAnimation(startPointX, startPointX + jitterX, startPointY, startPointY + jitterY);
-        translate.setDuration(50);
+                new TranslateAnimation(0, startPointX + jitterX, 0, startPointY + jitterY);
+        translate.setDuration(500);
 
         set.addAnimation(translate);
         return set;

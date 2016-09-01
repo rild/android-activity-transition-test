@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import rimp.rild.com.android.android_activity_transition_test.data.models.Article;
 
 
 /**
@@ -19,47 +22,6 @@ import java.io.InputStream;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-
-    public ImageAdapter(Context c) {
-        mContext = c;
-    }
-
-    public int getCount() {
-        return mThumbIds.length;
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        //use the size in gridview argument/scale bitmap resource
-        int layoutParams = 300;
-        ImageView imageView;
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(layoutParams, layoutParams));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        //Resize bitmap resource after setting image to imageview
-        //report: reqWidth / reqHeight over 300 required large heap and logged "The application may be doing too much work on its main thread."
-        if (layoutParams > 200) {
-            layoutParams = layoutParams / 3;
-        }
-        imageView.setImageBitmap(
-                decodeSampledBitmapFromResource(mContext.getResources(), mThumbIds[position], layoutParams, layoutParams));
-        return imageView;
-    }
 
     // references to our images
     private Integer[] mThumbIds = {
@@ -74,42 +36,61 @@ public class ImageAdapter extends BaseAdapter {
 
     };
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
+    List<Article> articles;
 
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
+    private void addDummyObjects() {
+        articles = new ArrayList();
+        for (int resId : mThumbIds) {
+            articles.add(new Article(resId, "sample title", "sample content"));
+        }
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
+    public ImageAdapter(Context c) {
+        mContext = c;
+        addDummyObjects();
+    }
 
-        if (height > reqHeight || width > reqWidth) {
+    public int getCount() {
+        return mThumbIds.length;
+    }
 
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
+    //return Article Object
+    public Object getItem(int position) {
+        return articles.get(position);
+    }
 
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    // create a new ImageView for each item referenced by the Adapter
+    public View getView(int position, View convertView, ViewGroup parent) {
+        //use the size in gridview argument/scale bitmap resource
+        int layoutParams = 300;
+        Article item = articles.get(position);
+
+        ImageView imageView;
+        if (convertView == null) {
+            // if it's not recycled, initialize some attributes
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.row_list, null);
+            imageView = (ImageView) convertView.findViewById(R.id.row_image);
+            imageView.setLayoutParams(new GridView.LayoutParams(layoutParams, layoutParams));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setPadding(8, 8, 8, 8);
+        } else {
+            imageView = (ImageView) convertView;
         }
 
-        return inSampleSize;
+        //Resize bitmap resource after setting image to imageview
+        //report: reqWidth / reqHeight over 300 required large heap and logged "The application may be doing too much work on its main thread."
+        if (layoutParams > 200) {
+            layoutParams = layoutParams / 3;
+        }
+
+        //report: running smoothly with reqW / H under 100.
+        imageView.setImageBitmap(
+                BitmapDecoder.decodeSampledBitmapFromResource(mContext.getResources(), item.getResImageId(), layoutParams, layoutParams));
+        return imageView;
     }
+
 }
