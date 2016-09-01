@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     Activity mActivity;
     ImageAdapter mImageAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +39,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
+                Toast.makeText(MainActivity.this, "Selected item number: " + position,
                         Toast.LENGTH_SHORT).show();
+
                 Gson parser = new Gson();
+
+                //Non animation ver.
 //                Article item = (Article) mImageAdapter.getItem(position);
 //                Intent intent = new Intent(mActivity, ImageDetailActivity.class);
 //                intent.putExtra(ImageDetailActivity.EXTRA_CONTENT, parser.toJson(item));
 //                startActivity(intent);
 
+                //Animation ver.
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         mActivity,
                         view.findViewById(R.id.row_image),
@@ -58,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //Not related
         test();
-
 
     }
 
+    //Not related
     private void test(){
         mTextView = (TextView) findViewById(R.id.textview);
 
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Not related
     private AnimationSet getAnimation() {
         final AnimationSet set = new AnimationSet(true);
 

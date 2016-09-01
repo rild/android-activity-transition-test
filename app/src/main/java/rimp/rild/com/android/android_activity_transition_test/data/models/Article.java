@@ -26,4 +26,12 @@ public class Article implements Serializable {
     public int getResImageId() {
         return resImageId;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

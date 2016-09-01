@@ -41,7 +41,7 @@ public class ImageAdapter extends BaseAdapter {
     private void addDummyObjects() {
         articles = new ArrayList();
         for (int resId : mThumbIds) {
-            articles.add(new Article(resId, "sample title", "sample content"));
+            articles.add(new Article(resId, "sample title " + resId, "sample content " + resId));
         }
     }
 

@@ -3,6 +3,7 @@ package rimp.rild.com.android.android_activity_transition_test;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -14,6 +15,8 @@ public class ImageDetailActivity extends AppCompatActivity {
     Article mArticle;
 
     ImageView mArticleImage;
+    TextView mTitleText;
+    TextView mContentText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +25,13 @@ public class ImageDetailActivity extends AppCompatActivity {
         getExtra();
 
         mArticleImage = (ImageView) findViewById(R.id.detail_image);
+        mContentText = (TextView) findViewById(R.id.content_text);
+        mTitleText = (TextView) findViewById(R.id.title_text);
+
         mArticleImage.setImageBitmap(
                 BitmapDecoder.decodeSampledBitmapFromResource(getResources(), mArticle.getResImageId(), 300, 300));
+        mContentText.setText(mArticle.getContent());
+        mTitleText.setText(mArticle.getTitle());
     }
 
     private void getExtra() {
