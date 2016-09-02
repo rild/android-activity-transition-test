@@ -3,6 +3,8 @@ package rimp.rild.com.android.android_activity_transition_test;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
@@ -18,6 +20,9 @@ import rimp.rild.com.android.android_activity_transition_test.data.models.Articl
 
 public class ImageDetailActivity extends AppCompatActivity {
     public static final String EXTRA_CONTENT = "Image Detail Content";
+    public static final String EXTRA_ARTICLE = "article";
+    public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
+
     Activity mActivity;
 
     Article mArticle;
@@ -29,8 +34,8 @@ public class ImageDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            ///
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            ///
 //            getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
 //            Transition ts = new Slide();  //Slide(); //Explode();
 //
@@ -38,11 +43,11 @@ public class ImageDetailActivity extends AppCompatActivity {
 //
 //            getWindow().setEnterTransition(ts);
 //            getWindow().setExitTransition(ts);
-
+//
 //            ChangeBounds bounds = new ChangeBounds();
 //            bounds.setDuration(1000);
 //            getWindow().setSharedElementEnterTransition(bounds);
-        }
+//        }
 
         setContentView(R.layout.activity_detail);
 
@@ -82,5 +87,25 @@ public class ImageDetailActivity extends AppCompatActivity {
         Gson parser = new Gson();
         String strObj = getIntent().getStringExtra(EXTRA_CONTENT);
         mArticle = parser.fromJson(strObj, Article.class);
+    }
+
+    //Animation ver
+    public static void launch(Activity activity, Article article, ImageView transitionView) {
+        Gson parser = new Gson();
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                activity,
+                transitionView,
+                EXTRA_IMAGE);
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra(EXTRA_ARTICLE, parser.toJson(article));
+        ActivityCompat.startActivity(activity, intent, options.toBundle());
+    }
+
+    //Non Animation ver
+    public static void launch(Activity activity, Article article) {
+        Gson parser = new Gson();
+        Intent intent = new Intent(activity, ImageDetailActivity.class);
+        intent.putExtra(ImageDetailActivity.EXTRA_CONTENT, parser.toJson(article));
+        activity.startActivity(intent);
     }
 }
